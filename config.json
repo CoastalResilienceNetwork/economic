@@ -1,0 +1,39 @@
+{
+    "name": "Economic App",
+	"pluginHeight": 450,
+	"regions": [
+		{
+			"name": "Coastal Resilience data",
+			"extent": {"xmin":-8279552.773327565,"ymin":4952655.188376434,"xmax":-7983615.836980773,"ymax":5088660.854503088,"spatialReference":{"wkid":102100,"latestWkid":3857}},
+			"methods": "methods/SLR.pdf",
+			"tabs" : [
+				{
+					"name": "Management Actions",
+					"variables": [
+						{"name":"Choose Year", "index":0, "values":[{"name":"Current","value":"Current", "help": "Year 2010"},{"name":"2020", "value":"2020"}, {"name":"2050", "value":"2050"}, {"name":"2080", "value":"2080"}]},
+						{"name":"Choose Sea Level Rise", "index":1, "values":[ {"name":"None","value":"None"},{"name":"Low","value":"Low"},{"name":"Medium","value":"Medium"},{"name":"High","value":"High"}]},
+						{"name":"Choose Storm Surge", "index":2, "values":[ {"name":"None","value":"None"},{"name":"Category 2","value":"c2", "default": true},{"name":"Category 3","value":"c3"}]}
+					],
+					"mainURL": "http://dev.services2.coastalresilience.org:6080/arcgis/rest/services/Ventura_Economics/Ventura_Economics_Scenarios/MapServer",
+					"combos": {
+					
+					
+					}
+				},
+				{
+					"name": "EBA NBA Damage Estimates",
+					"variables": [
+						{"name":"Choose Year", "index":0, "values":[{"name":"Current","value":"Current", "help": "Year 2010"},{"name":"2020", "value":"2020"}, {"name":"2050", "value":"2050"}, {"name":"2080", "value":"2080"}]},
+						{"name":"Choose Sea Level Rise", "index":1, "values":[ {"name":"None","value":"None"},{"name":"Low","value":"Low"},{"name":"Medium","value":"Medium"},{"name":"High","value":"High"}]},
+						{"name":"Choose Storm Surge", "index":2, "values":[ {"name":"None","value":"None"},{"name":"Category 2","value":"c2", "default": true},{"name":"Category 3","value":"c3"}]}
+					],
+					"mainURL": "http://dev.services2.coastalresilience.org:6080/arcgis/rest/services/Ventura_Economics/Ventura_Damage_Estimates/MapServer",
+					"combos": {
+					
+					
+					}
+				}			
+			]
+		}
+	]
+}
