@@ -308,17 +308,61 @@ define([
 				 
 			   changeGeography: function(geography, zoomto) {
 			   
-			  
+					this.currentgeography = geography;
+					
+					ext = new Extent(this.currentgeography.extent);
+					this.map.setExtent(ext);		
+					
+					this.tabpan = new TabContainer({
+						//style: "height: 100%; width: 100%;"
+					});
+		
+					dom.byId(this.mainpane.domNode).appendChild(this.tabpan.domNode);
+					parser.parse();
+					
+					this.tabs = new Array()
+					
+					array.forEach(this.currentgeography.tabs, lang.hitch(this,function(ctabrec, i){
+					
+						ctab = new ContentPane({
+						//  style:"height:" + this.sph + "px !important",
+						//style: "height: 100%; width: 100%;",
+						  title: ctabrec.name
+						});
+						
+						this.tabpan.addChild(ctab);
+						this.tabs.push(ctab);
+					
+					}));
+					
+					
+					aspect.after(this.tabpan, "selectChild", lang.hitch(this,function (event) {
+						this.resize();
+					}));
+					
+					this.tabpan.startup();
+					
+					
+					parser.parse();
+					
+					this.resize();
+					console.log('donetabs');
+					//alert(this.currentgeography.tabs) 	
+
+
+
+
+/*					
+					
 					if (this.mainLayer != undefined) {
 				
 						this.map.removeLayer(this.mainLayer);
 					
 					}
 			   
-					this.currentgeography = geography;	
+						
 					
-					ext = new Extent(this.currentgeography.extent);
-					this.map.setExtent(ext);
+
 					
 			   
 					if (geography.methods != undefined) {
@@ -443,11 +487,13 @@ define([
 					
 					this.map.addLayer(this.mainLayer);
 					
-					*/
+					
 					
 					
 					//this.clearFilters();
 					this.changeScenario();
+					*/
+					
 					
 					//rasterFunction.functionName = "Colormap";
 					//var arguments = {};
@@ -458,7 +504,7 @@ define([
 					
 					
 					//this.mainLayer.setRenderingRule(rasterFunction);
-					
+				
 					
 			   },
 			   
@@ -1296,22 +1342,25 @@ define([
 						domStyle.set(this.chartArea.domNode, 'display', 'none');
 					}));
 					
-					this.tabpan = new TabContainer({
+					//this.tabpan = new TabContainer({
 						//style: "height: 100%; width: 100%;"
-					});
+					//});
 					
 					this.mainpane = new ContentPane({
 					 // style:"height:" + this.sph + "px !important",
 					 //style: "height: 100%; width: 100%;",
-					  title: "Choose Parameters"
+					 // title: "Choose Parameters"
 					});
 					
+					domClass.add(this.mainpane.domNode, "claro");
 					parser.parse();
+					domClass.add(this.mainpane.domNode, "claro");
+					
 					
 					//dom.byId(this.container).appendChild(this.tabpan.domNode);
 					
 					dom.byId(this.container).appendChild(this.mainpane.domNode);
-					
+					domClass.add(this.mainpane.domNode, "claro");
 					//this.tabpan.addChild(this.mainpane);
 					//this.tabpan.addChild(this.chartpane);
 					

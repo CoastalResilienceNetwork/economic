@@ -3,8 +3,17 @@
 	"pluginHeight": 450,
 	"regions": [
 		{
-			"name": "Coastal Resilience data",
-			"extent": {"xmin":-8279552.773327565,"ymin":4952655.188376434,"xmax":-7983615.836980773,"ymax":5088660.854503088,"spatialReference":{"wkid":102100,"latestWkid":3857}},
+			"name": "Ventura",
+            "extent": {
+                "xmin": -13268549.8855,
+                "ymin": 4039739.31647,
+                "xmax": -13253234.8855,
+                "ymax": 4049354.31647,
+                "spatialReference": {
+                    "wkid": 102100,
+                    "latestWkid": 3857
+                }
+            },
 			"methods": "methods/SLR.pdf",
 			"tabs" : [
 				{
