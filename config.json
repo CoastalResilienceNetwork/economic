@@ -18,6 +18,17 @@
 			"tabs" : [
 				{
 					"name": "Management Actions",
+					"controls": [
+						{"name": "Management Scenarios", "group": "MS", "values": [{"name":"Using Concrete","value":"Concrete", "help": "Year 2010"},{"name":"Using Marshmallows Stuff", "value":"marshmallows"}], "type": "checkbox"},
+						{"name":"Hazard Zone Approach", "group": "main", "values":[{"name":"Engineered Based Approach","value":"EBA", "help": "Year 2010"},{"name":"Nature Based Approach", "value":"NBA"}], "type": "radio"},
+						{"name":"Hazard Zone Type", "group": "main", "values":[{"name":"Coastal Erosion","value":"CE"},{"name":"Rising Tide", "value":"RT"},{"name":"Coastal Storm Flood", "value":"CSF"},{"name":"Coastal Storm Wave Impact", "value":"CSWI"}], "type": "radio"},
+						{"name":"Year / Sea Level Rise", "group": "main", "values":[{"name":"Current / Existing Conditions","value":"CEC"},{"name":"2030 / High", "value":"2030"},{"name":"2060 / High", "value":"2060"},{"name":"2100 / High", "value":"2100"}], "type": "radio"}	
+					
+					], 
+					
+					
+					
+					
 					"variables": [
 						{"name":"Choose Year", "index":0, "values":[{"name":"Current","value":"Current", "help": "Year 2010"},{"name":"2020", "value":"2020"}, {"name":"2050", "value":"2050"}, {"name":"2080", "value":"2080"}]},
 						{"name":"Choose Sea Level Rise", "index":1, "values":[ {"name":"None","value":"None"},{"name":"Low","value":"Low"},{"name":"Medium","value":"Medium"},{"name":"High","value":"High"}]},
@@ -31,6 +42,14 @@
 				},
 				{
 					"name": "EBA NBA Damage Estimates",
+					"controls": [
+						{"name": "Management Scenarios", "group": "MS", "values": [{"name":"Using Concrete","value":"Concrete", "help": "Year 2010"},{"name":"Using Marshmallows Stuff", "value":"marshmallows"}], "type": "checkbox"},
+						{"name":"Hazard Zone Approach", "group": "main", "values":[{"name":"Engineered Based Approach","value":"EBA", "help": "Year 2010"},{"name":"Nature Based Approach", "value":"NBA"}], "type": "radio"},
+						{"name":"Hazard Zone Type", "group": "main", "values":[{"name":"Coastal Erosion","value":"CE"},{"name":"Rising Tide", "value":"RT"},{"name":"Coastal Storm Flood", "value":"CSF"},{"name":"Coastal Storm Wave Impact", "value":"CSWI"}], "type": "radio"},
+						{"name":"Year / Sea Level Rise", "group": "main", "values":[{"name":"Current / Existing Conditions","value":"CEC"},{"name":"2030 / High", "value":"2030"},{"name":"2060 / High", "value":"2060"},{"name":"2100 / High", "value":"2100"}], "type": "radio"}	
+					
+					], 
+					
 					"variables": [
 						{"name":"Choose Year", "index":0, "values":[{"name":"Current","value":"Current", "help": "Year 2010"},{"name":"2020", "value":"2020"}, {"name":"2050", "value":"2050"}, {"name":"2080", "value":"2080"}]},
 						{"name":"Choose Sea Level Rise", "index":1, "values":[ {"name":"None","value":"None"},{"name":"Low","value":"Low"},{"name":"Medium","value":"Medium"},{"name":"High","value":"High"}]},
