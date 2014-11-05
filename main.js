@@ -421,6 +421,7 @@ define([
 			   
 				}));
 				
+				comboLookups.reverse();
 				
 				newarry = new Array();
 				
@@ -479,7 +480,6 @@ define([
 					}));
 					
 					//}
-					
 					
 					this.myLayers = new Array();
 					
@@ -618,6 +618,8 @@ define([
 					parser.parse();
 					
 					this.resize();
+					
+					this.makeSandwidches();
 					
 			   },
 			   
