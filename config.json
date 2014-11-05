@@ -66,15 +66,15 @@
 				{
 					"name": "EBA NBA Damage Estimates",
 					"controls": [
-						{"name": "Management Scenarios", "group": "MS", "values": [{"name":"Using Concrete","value":"Concrete", "help": "Year 2010"},{"name":"Using Marshmallows Stuff", "value":"marshmallows"}], "type": "checkbox"},
-						{"name":"Hazard Zone Approach", "group": "main", "values":[{"name":"Engineered Based Approach","value":"EBA", "help": "Year 2010"},{"name":"Nature Based Approach", "value":"NBA"}], "type": "radio"},
-						{"name":"Hazard Zone Type", "group": "main", "values":[{"name":"Coastal Erosion","value":"CE"},{"name":"Rising Tide", "value":"RT"},{"name":"Coastal Storm Flood", "value":"CSF"},{"name":"Coastal Storm Wave Impact", "value":"CSWI"}], "type": "radio"},
+						{"name": "Management Scenarios", "group": "MS", "values": [{"name":"Existing Conditions","value":"CUR"},{"name":"Engineered Based Approach","value":"EBA"},{"name":"Nature Based Approach","value":"NBA"}], "type": "radio"},
+						{"name":"Damage Estimates", "group": "main", "values":[{"name":"$ value amount of public buildings losses","value":"Pub"},{"name":"$ value amount of residential losses", "value":"Res"},{"name":"$ value amount of agricultural losses", "value":"Ag"},{"name":"$ value amount of recreational losses", "value":"Rec"}], "type": "radio"},
+						{"name":"Hazard Zones", "group": "main", "values":[{"name":"Coastal Erosion","value":"CE"},{"name":"Rising Tide", "value":"RT"},{"name":"Coastal Storm Flood", "value":"CSF"},{"name":"Coastal Storm Wave Impact", "value":"CSWI"}], "type": "radio"},
 						{"name":"Year / Sea Level Rise", "group": "main", "values":[{"name":"Current / Existing Conditions","value":"CEC"},{"name":"2030 / High", "value":"2030"},{"name":"2060 / High", "value":"2060"},{"name":"2100 / High", "value":"2100"}], "type": "radio"}	
 					
 					], 
 					"mainURL": "http://dev.services2.coastalresilience.org:6080/arcgis/rest/services/Ventura_Economics/Ventura_Damage_Estimates/MapServer",
 					"combos": {
-
+						"CUR|Pub|CE|CEC": [{"type":"dynamic","show":[2,4]}]
 					}
 				}			
 			]

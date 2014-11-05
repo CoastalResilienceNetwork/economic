@@ -425,6 +425,85 @@ define([
 				
 				newarry = new Array();
 				
+				dynamicLayers = {};
+				tiledLayers = new Array();
+				
+				array.forEach(comboLookups, lang.hitch(this,function(combolayers, cl){
+
+					array.forEach(combolayers, lang.hitch(this,function(clayer, i){
+					
+						console.log(clayer)
+					
+						if (clayer.url == undefined) {
+						
+							clayer.url = this.currentgeography.tabs[0].mainURL
+						
+						}
+						
+						console.log("Combo");
+						
+						if (clayer.type == "dynamic") {
+						
+							if (dynamicLayers[clayer.url] == undefined) {
+							
+								dynamicLayers[clayer.url] = new Array();							
+					
+							}	
+								dynamicLayers[clayer.url] = dynamicLayers[clayer.url].concat(clayer.show);
+								console.log(dynamicLayers[clayer.url]);
+							
+						
+						}
+						
+						if (clayer.type == "tiled") {
+						
+							Naddlayer = new ArcGISTiledMapServiceLayer(
+								clayer.url,{
+								useMapImage: true
+							}
+							);						
+						
+							tiledLayers.push(Naddlayer);
+							
+						}						
+						
+
+					}));	
+				
+				}));
+
+				array.forEach(this.myLayers, lang.hitch(this,function(clayer, i){
+					this.map.removeLayer(clayer);
+				}));
+
+				
+				
+				for (lurl in dynamicLayers) {
+				
+							Naddlayer = new ArcGISDynamicMapServiceLayer(
+								lurl,{
+								useMapImage: true
+							}
+							);
+							
+							Naddlayer.setVisibleLayers([]);
+							Naddlayer.setVisibleLayers(dynamicLayers[lurl]);	
+							newarry.push(Naddlayer);
+							
+							this.map.addLayer(Naddlayer);							
+				
+				}
+				
+				this.myLayers = new Array();
+				
+				array.forEach(newarry, lang.hitch(this,function(clayer, i){
+					this.myLayers.push(clayer);
+				}));		
+				
+				console.log(tiledLayers);
+				
+				/*
+				
 				array.forEach(comboLookups, lang.hitch(this,function(combolayers, cl){
 				
 					array.forEach(combolayers, lang.hitch(this,function(clayer, i){
@@ -466,12 +545,14 @@ define([
 						
 						newarry.push(Naddlayer);
 						
-						console.log(newarry);
+						//console.log(newarry);
 						
 						this.map.addLayer(Naddlayer);
 					
 					
 					}));
+					
+					
 					
 				}));
 					
@@ -489,6 +570,13 @@ define([
 					
 					this.changeOpacity(this.translevel);			
 			
+			
+				console.log(this.map.layerIds);
+				
+					array.forEach(this.map.layerIds, lang.hitch(this,function(lid, i){
+						console.log(this.map.getLayer(lid));
+					}));	
+			   */
 			   
 			   },
 				 
