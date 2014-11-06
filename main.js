@@ -182,18 +182,8 @@ define([
                deactivate: function () {
 
 				array.forEach(this.myLayers, lang.hitch(this,function(clayer, i){
-				console.log("hi", clayer);
 					this.map.removeLayer(clayer);
-				}));
-
-
-				console.log(this.map.layerIds);
-				
-					array.forEach(this.map.layerIds, lang.hitch(this,function(lid, i){
-						console.log(lid, this.map.getLayer(lid));
-						//mpLay = this.map.getLayer(lid);
-						//this.map.removeLayer(mpLay);
-					}));				
+				}));				
 			   
 			   },
 			   
@@ -342,6 +332,8 @@ define([
 			   
 					console.log(this.currentgeography);
 					
+					selectedIndex = this.tabpan.selectedChildWidget.index;
+					
 					pretabsandWitches = [];
 					
 					array.forEach(this.currentgeography.tabs, lang.hitch(this,function(ctabrec, i){
@@ -383,9 +375,9 @@ define([
 					
 					sandWitchList = [];
 					
-					for (key in pretabsandWitches[0]) {
+					for (key in pretabsandWitches[selectedIndex]) {
 					
-						cgroup = pretabsandWitches[0][key];
+						cgroup = pretabsandWitches[selectedIndex][key];
 						
 						groupc = 0
 						
@@ -432,7 +424,7 @@ define([
 			   
 			   comboLookups = []
 			   
-			   combos = this.currentgeography.tabs[0].combos;
+			   combos = this.currentgeography.tabs[selectedIndex].combos;
 			   console.log(combos);
 			   
 			    array.forEach(sandWitchList, lang.hitch(this,function(sw, s){
@@ -456,7 +448,7 @@ define([
 					
 						if (clayer.url == undefined) {
 						
-							clayer.url = this.currentgeography.tabs[0].mainURL
+							clayer.url = this.currentgeography.tabs[selectedIndex].mainURL
 						
 						}
 						
@@ -627,7 +619,8 @@ define([
 						ctab = new ContentPane({
 						//  style:"height:" + this.sph + "px !important",
 						//style: "height: 100%; width: 100%;",
-						  title: ctabrec.name
+						  title: ctabrec.name,
+						  index: i
 						});
 						
 						this.tabpan.addChild(ctab);
@@ -724,7 +717,15 @@ define([
 					
 					aspect.after(this.tabpan, "selectChild", lang.hitch(this,function (event) {
 						this.resize();
+						
+						array.forEach(this.myLayers, lang.hitch(this,function(clayer, i){
+							this.map.removeLayer(clayer);
+						}));
+						
+						this.makeSandwidches();
+						
 					}));
+					
 					
 					this.tabpan.startup();
 					
