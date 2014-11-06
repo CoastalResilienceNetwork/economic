@@ -181,11 +181,19 @@ define([
 			   
                deactivate: function () {
 
-					if (this.mainLayer != undefined) {
+				array.forEach(this.myLayers, lang.hitch(this,function(clayer, i){
+				console.log("hi", clayer);
+					this.map.removeLayer(clayer);
+				}));
+
+
+				console.log(this.map.layerIds);
 				
-						this.map.removeLayer(this.mainLayer);
-					
-					}				
+					array.forEach(this.map.layerIds, lang.hitch(this,function(lid, i){
+						console.log(lid, this.map.getLayer(lid));
+						//mpLay = this.map.getLayer(lid);
+						//this.map.removeLayer(mpLay);
+					}));				
 			   
 			   },
 			   
@@ -312,9 +320,21 @@ define([
 				
 				this.currentgeography.tabs[ctl.tab].controls[ctl.control].values[ctl.value].selected = e;
 				
-				a = lang.hitch(this,this.makeSandwidches);
+				doit = false;
 			
-				a();
+				if (ctl.type == "radio") {
+				
+					if (e == false) {doit = true} 
+				
+				} else { doit = true }
+				
+				if (doit == true) {
+				
+					a = lang.hitch(this,this.makeSandwidches);
+			
+					a();
+				
+				}
 			
 			   },
 				 
@@ -405,10 +425,10 @@ define([
 				
 				this.updateMap(sandWitchList);
 				
-					
 			   },
 			   
 			   updateMap: function(sandWitchList) {
+			   
 			   
 			   comboLookups = []
 			   
@@ -471,11 +491,11 @@ define([
 					}));	
 				
 				}));
-
+				
+					
 				array.forEach(this.myLayers, lang.hitch(this,function(clayer, i){
 					this.map.removeLayer(clayer);
 				}));
-
 				
 				
 				for (lurl in dynamicLayers) {
@@ -485,12 +505,12 @@ define([
 								useMapImage: true
 							}
 							);
-							
-							Naddlayer.setVisibleLayers([]);
+						
 							Naddlayer.setVisibleLayers(dynamicLayers[lurl]);	
 							newarry.push(Naddlayer);
 							
-							this.map.addLayer(Naddlayer);							
+							this.map.addLayer(Naddlayer);
+							console.log(Naddlayer);							
 				
 				}
 				
@@ -501,6 +521,12 @@ define([
 				}));		
 				
 				console.log(tiledLayers);
+				
+				console.log(this.map.layerIds);
+				
+					array.forEach(this.map.layerIds, lang.hitch(this,function(lid, i){
+						console.log(lid, this.map.getLayer(lid));
+					}));
 				
 				/*
 				
@@ -663,14 +689,14 @@ define([
 									//console.log(c, v);
 									
 									   ncontrol = new rorc({
-										name: "group_" + c,
+										name: "tab_" + i + "_group_" + c,
 										//id: this.tabpan.id + "_radio_" + groupid + "_" + i,
 										value: val.value,
 										index: 1,
-										title: "test",
+										title: "",
 										data: {"tab": i, "control": c, "value": v},
 										checked: sel,
-										onChange: lang.hitch(this,function(e) { this.updateChecks({"tab": i, "control": c, "value": v}, e) })
+										onChange: lang.hitch(this,function(e) { this.updateChecks({"tab": i, "control": c, "value": v, "type": control.type}, e) })
 										}, ncontrolnode);
 										
 										console.log(ncontrol);
