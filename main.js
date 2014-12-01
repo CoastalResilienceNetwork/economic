@@ -292,7 +292,10 @@ define([
 						this.chart.resize(cdg.w-50, ch - 80)
 					}
 					
+					
 					this.tabpan.layout();
+					
+
 					
 					array.forEach(this.varsliders, lang.hitch(this,function(slider, i){
 					
@@ -327,12 +330,35 @@ define([
 				}
 			
 			   },
+			   
+			   updateSlider: function(ctl,e) {
+			   
+				//console.log(e);
+			   
+					array.forEach(this.currentgeography.tabs[ctl.tab].controls[ctl.control].values, lang.hitch(this,function(v, i) {
+
+						v.selected = false;
+					
+					}));					
+			   
+			   
+			        this.currentgeography.tabs[ctl.tab].controls[ctl.control].values[e].selected = true; //e;
+
+					a = lang.hitch(this,this.makeSandwidches);
+			
+					a();
+					
+			   },
 				 
 			   makeSandwidches: function() {
 			   
 					console.log(this.currentgeography);
 					
-					selectedIndex = this.tabpan.selectedChildWidget.index;
+					try {
+						selectedIndex = this.tabpan.selectedChildWidget.index;
+					} catch(err) {
+						selectedIndex = 0;
+					}
 					
 					pretabsandWitches = [];
 					
@@ -520,81 +546,6 @@ define([
 						console.log(lid, this.map.getLayer(lid));
 					}));
 				
-				/*
-				
-				array.forEach(comboLookups, lang.hitch(this,function(combolayers, cl){
-				
-					array.forEach(combolayers, lang.hitch(this,function(clayer, i){
-					
-						console.log(clayer)
-					
-						if (clayer.url == undefined) {
-						
-							clayer.url = this.currentgeography.tabs[0].mainURL
-						
-						}
-						
-						console.log(clayer.url);
-
-						
-						if (clayer.type == "dynamic") {
-						
-							Naddlayer = new ArcGISDynamicMapServiceLayer(
-								clayer.url,{
-								useMapImage: true
-							}
-							);
-							
-							Naddlayer.setVisibleLayers(clayer.show);
-						
-						}
-
-						if (clayer.type == "tiled") {
-						
-							Naddlayer = new ArcGISTiledMapServiceLayer(
-								clayer.url,{
-								useMapImage: true
-							}
-							);
-							
-							//Naddlayer.setVisibleLayers(clayer.show);
-						
-						}
-						
-						newarry.push(Naddlayer);
-						
-						//console.log(newarry);
-						
-						this.map.addLayer(Naddlayer);
-					
-					
-					}));
-					
-					
-					
-				}));
-					
-					array.forEach(this.myLayers, lang.hitch(this,function(clayer, i){
-						this.map.removeLayer(clayer);
-					}));
-					
-					//}
-					
-					this.myLayers = new Array();
-					
-					array.forEach(newarry, lang.hitch(this,function(clayer, i){
-						this.myLayers.push(clayer);
-					}));					
-					
-					this.changeOpacity(this.translevel);			
-			
-			
-				console.log(this.map.layerIds);
-				
-					array.forEach(this.map.layerIds, lang.hitch(this,function(lid, i){
-						console.log(this.map.getLayer(lid));
-					}));	
-			   */
 			   
 			   },
 				 
@@ -605,9 +556,21 @@ define([
 					ext = new Extent(this.currentgeography.extent);
 					this.map.setExtent(ext);		
 					
-					this.tabpan = new TabContainer({
-						//style: "height: 100%; width: 100%;"
-					});
+					if (this.currentgeography.tabs.length == 1) {
+					
+						this.tabpan = new ContentPane({
+							//style: "height: 100%; width: 100%;"
+						});
+						
+						this.tabpan.layout = function() {console.log('layout')};
+					
+					} else {
+					
+						this.tabpan = new TabContainer({
+							//style: "height: 100%; width: 100%;"
+						});
+					
+					}
 		
 					dom.byId(this.mainpane.domNode).appendChild(this.tabpan.domNode);
 					parser.parse();
@@ -629,6 +592,84 @@ define([
 						
 						array.forEach(ctabrec.controls, lang.hitch(this,function(control, c){
 						
+						
+						
+						  if (control.type == "slider") {
+						  
+								  nodetitle = domConstruct.create("div", {style:"font-weight: bold;", innerHTML: control.name});
+								  ctab.domNode.appendChild(nodetitle);
+								  
+								  parser.parse();
+
+								  outslid = "";
+								  
+								  isel = 0;
+								  
+								  array.forEach(control.values, lang.hitch(this,function(option, i){
+									 
+									if (option.help != undefined) {
+										outslid = outslid + "<li><span id='" + ctab.id + "_lvoption_" + i + "'> <a style='color:black' href='#' title='" + option.help + "'>" + option.name.replace(" ","<br>").replace(" ","<br>").replace(" ","<br>").replace(" ","<br>").replace(" ","<br>").replace(" ","<br>").replace(" ","<br>") + "</a></span></li>";
+									} else {
+										outslid = outslid + "<li><span id='" + ctab.id + "_lvoption_" + i + "'> " + option.name.replace(" ","<br>").replace(" ","<br>").replace(" ","<br>").replace(" ","<br>").replace(" ","<br>").replace(" ","<br>").replace(" ","<br>") + "</span></li>";
+									
+									}
+									
+								   sel = option.selected;
+								   
+								   if (sel == undefined) {
+								   
+								    sel = false;
+									option.selected = false;
+								   
+								   } 
+								   
+								   if (sel == true) { 
+									   isel = i;
+									   notSelected = false;
+								   }
+								   
+								   if (i == control.values.length - 1) {
+								   
+								    if (notSelected == true) {
+									
+										sel = true;
+										option.selected = true;
+										isel = i;
+									
+									}
+								   
+								   }
+									
+									
+								  })); 
+								
+								nslidernode = domConstruct.create("div");
+								ctab.domNode.appendChild(nslidernode); 
+								
+								labelsnode = domConstruct.create("ol", {"data-dojo-type":"dijit/form/HorizontalRuleLabels", container:"bottomDecoration", style:"height:0.25em;padding-top: 10px !important;color:black !important", innerHTML: outslid})
+								nslidernode.appendChild(labelsnode);
+								
+								slider = new HorizontalSlider({
+									name: "tab_" + i + "_group_" + c,
+									//id: ctab.id + "_slider_",
+									value: 0,
+									minimum: 0,
+									maximum: (control.values.length -1),
+									showButtons:false,
+									title: control.name,
+									intermediateChanges: true,
+									discreteValues: control.values.length,
+									//index: groupid,
+									//onChange: lang.hitch(this,function(e) {this.updateUnique(e, groupid)}),
+									onChange: lang.hitch(this,function(e) { this.updateSlider({"tab": i, "control": c, "type": control.type}, e) }),
+									style: "width:210px;margin-top:10px;margin-bottom:20px"
+								}, nslidernode);
+								
+								parser.parse()								
+						   
+						   
+						   } else {
+						  
 
 							if (control.type == "radio") {
 									rorc = RadioButton;
@@ -709,6 +750,7 @@ define([
 								
 								parser.parse()							
 						
+							  }
 						
 						}));
 					
